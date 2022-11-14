@@ -12,13 +12,13 @@ public class Jugador {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "ID_Jugador")
+	@Column(name = "ID_Jugador", nullable = false)
 	private int jugID;
 
-	@Column(name = "Nom")
+	@Column(name = "Nom", length = 50 , nullable = false)
 	private String Nom;
 
-	@Column(name = "Cognom")
+	@Column(name = "Cognom", length = 50 , nullable = false)
 	private String Cognom;
 
 	

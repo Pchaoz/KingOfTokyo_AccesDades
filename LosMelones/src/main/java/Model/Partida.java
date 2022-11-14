@@ -14,13 +14,13 @@ public class Partida {
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "ID_Partida", nullable = false)
+	@Column(name = "ID_Partida")
 	private int partidaID;
 	
-	@Column(name = "Torn", nullable = false)
-	private int Torn;
+	@Column(name = "Torn")
+	private int Nom;
 
-	@Column(name = "Numero Jugadors", nullable = false)
+	@Column(name = "Numero Jugadors",length=1)
 	private int Njugadors;
 
 	public int getPartidaID() {
@@ -32,11 +32,11 @@ public class Partida {
 	}
 
 	public int getNom() {
-		return Torn;
+		return Nom;
 	}
 
 	public void setNom(int nom) {
-		Torn = nom;
+		Nom = nom;
 	}
 
 	public int getNjugadors() {
@@ -49,7 +49,7 @@ public class Partida {
 
 	@Override
 	public String toString() {
-		return "Partida [partidaID=" + partidaID + ", Nom=" + Torn + ", Njugadors=" + Njugadors + "]";
+		return "Partida [partidaID=" + partidaID + ", Nom=" + Nom + ", Njugadors=" + Njugadors + "]";
 	}
 
 	

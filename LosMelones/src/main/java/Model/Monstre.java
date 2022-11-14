@@ -51,6 +51,17 @@ public class Monstre {
 	@JoinColumn(name="id_monstre_poder")
 	private Monstre mons;
 
+	public Monstre(Partida partida, String nom) {
+		super();
+		this.partida = partida;
+		this.nom = nom;
+		this.vides = 10;
+		this.p_victoria = 0;
+		this.energia = 0;
+		this.eleminat = false;
+		this.toquio = false;
+	}
+	
 	public Monstre(Partida partida, Jugador jugador, String nom, int vides, int p_victoria, int energia, boolean toquio,
 			boolean eleminat, Monstre mons) {
 		super();

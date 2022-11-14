@@ -23,9 +23,8 @@
 
 <!-- Aqui van las clases que mapees. TODAS -->
 		<!--<mapping class="Persona" /> -->
-		<mapping class="Model.Tenda" />
-		<mapping class="Model.Component" />
-		<mapping class="Model.Marca" />
-		<mapping class="Model.Adreça" />
+		<mapping class="Model.Jugador" />
+		<mapping class="Model.Monstre" />
+		<mapping class="Model.Partida" />
 	</session-factory>
 </hibernate-configuration>

@@ -6,7 +6,12 @@ public class MainMelonero {
 
 	public static void main(String[] args) {
 		
-		boolean jugar= true;
+		
+		NovaPartida partida1 = new NovaPartida(2);
+		partida1.carregarDades();
+		
+		
+		/*boolean jugar= true;
 		
 		int numeroJugadors=0;
 		
@@ -43,6 +48,6 @@ public class MainMelonero {
 		}
 		
 		System.out.println("Joc acabat!");
-		sc.close();
+		sc.close();^*/
 	}
 }

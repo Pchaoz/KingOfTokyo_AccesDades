@@ -25,6 +25,12 @@ public class Jugador {
 	public Jugador() {
 		super();
 	}
+	
+	public Jugador(String nom, String cognom) {
+		super();
+		this.Nom = nom;
+		this.Cognom = cognom;
+	}
 
 	public int getJugID() {
 		return jugID;

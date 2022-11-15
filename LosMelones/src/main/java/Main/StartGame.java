@@ -1,6 +1,5 @@
 package Main;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class StartGame {
@@ -25,13 +24,12 @@ public class StartGame {
 	
 
 	private void GenerarPartida() {
-		//aqui se genera la partida con los datos, dependiendo de los juagdores que tenga la partida
 		Jugar();
 	}
 	
 	private void Jugar() {
 		boolean FiPartida=false;
-		while(FiPartida) {
+		while(!FiPartida) {
 			//esta funcion ha de coger el turno de los jugadores
 			SeleccionarTorn();
 		}
@@ -45,13 +43,44 @@ public class StartGame {
 	}
 	
 	private void TirarDaus() {
-		ArrayList <Integer>daus=new ArrayList<Integer>();
+		//Función de simulacion de tiradas de dados	
+		int cont1=0;
+		int cont2=0;
+		int cont3=0;
+		int contEnergy=0;
+		int contGarra=0;
+		int contCorazon=0;
+
 		Random azar= new Random();
 		int dau;
 		for (int i = 0; i < 6; i++) {
 			dau= azar.nextInt(0,6+1);
-			daus.add(dau);
+			
+			switch (dau) {
+			case 1: 
+				cont1++;
+				break;
+			case 2:
+				cont2++;
+				break;
+			case 3:
+				cont3++;
+				break;
+			case 4:
+				contEnergy++;
+				break;
+			case 5:
+				contGarra++;
+				break;
+			case 6:
+				contCorazon++;
+				break;
+			}
+			
 		}
+		
+		System.out.println("Los resultados de la tirada són "+cont1+" unos, "+cont2+" doses, "+cont3+" treses, "
+		+contEnergy+" de energia, "+contGarra+" garras i "+contCorazon+" corazones.");
 		
 		//resoldreTirada(Jugador jugador);
 		//comunica con clase monstre para que al jugador habil se le cambie los stats dependienddo de la tirada

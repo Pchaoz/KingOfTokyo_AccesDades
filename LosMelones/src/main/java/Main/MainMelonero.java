@@ -6,12 +6,8 @@ public class MainMelonero {
 
 	public static void main(String[] args) {
 		
-		
-		NovaPartida partida1 = new NovaPartida(2);
-		partida1.carregarDades();
-		
-		
-		/*boolean jugar= true;
+	
+		boolean jugar= true;
 		
 		int numeroJugadors=0;
 		
@@ -32,7 +28,9 @@ public class MainMelonero {
 			System.out.println("Jugaran "+numeroJugadors+" jugadors.");
 			System.out.println("----------------------------------------");
 			
-			//StartGame st= new startGame(numeroJugadors);
+			NovaPartida partida1 = new NovaPartida(numeroJugadors);
+			partida1.carregarDades();
+			StartGame st= new StartGame(numeroJugadors);
 			
 			System.out.println("----------------------------------------");
 			System.out.println("Vols tornar a jugar? 1=SI, Qualsevol altre númer serà NO.");
@@ -48,6 +46,6 @@ public class MainMelonero {
 		}
 		
 		System.out.println("Joc acabat!");
-		sc.close();^*/
+		sc.close();
 	}
 }

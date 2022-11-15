@@ -1,5 +1,6 @@
 package Main;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class StartGame {
@@ -82,6 +83,14 @@ public class StartGame {
 		System.out.println("Los resultados de la tirada són "+cont1+" unos, "+cont2+" doses, "+cont3+" treses, "
 		+contEnergy+" de energia, "+contGarra+" garras i "+contCorazon+" corazones.");
 		
+		ArrayList<Integer>resultadosDados= new ArrayList<Integer>();
+		resultadosDados.add(cont1);
+		resultadosDados.add(cont2);
+		resultadosDados.add(cont3);
+		resultadosDados.add(contEnergy);
+		resultadosDados.add(contGarra);
+		resultadosDados.add(contCorazon);
+	}
 		//resoldreTirada(Jugador jugador);
 		//comunica con clase monstre para que al jugador habil se le cambie los stats dependienddo de la tirada
 		
@@ -98,7 +107,7 @@ public class StartGame {
 		 * Condiciones de victoria: si eres el unico monstruo vivo o bien si tus puntis de victoria suben a 20 o mas.
 		*/
 		
-	}
+
 	
 	
 

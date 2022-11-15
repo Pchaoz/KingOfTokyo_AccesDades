@@ -1,6 +1,7 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import DAO.JugadorDAO;
 import DAO.MonstreDAO;
@@ -59,6 +60,8 @@ public class NovaPartida {
 		monstres.add(monstre5);
 		monstres.add(monstre6);
 		
+		Collections.shuffle(monstres);
+		
 		/* Per testejar si lo de la carta poder funciona */
 		//Monstre monstreCarta = new Monstre(partida, "Carta de poder exemple");
 		//monstreDAO.Insert(monstreCarta);
@@ -66,9 +69,7 @@ public class NovaPartida {
 		/*Seleccionem un monstre aleatori de la llista, li assignem a un jugador i ho assignem a la partida*/
 		for (int i = 0; i < this.nJugadors; i++) {
 			Jugador seguentJugador = jugadors.get(i);
-			int random = (int) Math.random() * monstres.size();
-			Monstre monstreAleatori = monstres.get(random);
-			monstres.remove(random);
+			Monstre monstreAleatori = monstres.get(i);
 			monstreAleatori.setJugador(seguentJugador);
 			monstreAleatori.setPartida(partida);
 			jugadorDAO.Insert(seguentJugador);

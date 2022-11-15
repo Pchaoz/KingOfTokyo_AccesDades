@@ -55,6 +55,10 @@ public class Monstre {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="monstreCarta")
 	private Monstre monstreCartaAssignat;
 
+	public Monstre() {
+		super();
+	}
+	
 	public Monstre(Partida partida, String nom) {
 		super();
 		this.partida = partida;

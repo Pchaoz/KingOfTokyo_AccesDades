@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import DAO.MonstreDAO;
+import Model.Monstre;
 
 import DAO.JugadorDAO;
 import Model.Jugador;
@@ -94,9 +96,9 @@ public class StartGame {
 	// mosntre está a tokyo llavors el mosntre actual entra
 	// Función de simulacion de tiradas de dados
 	private void resoldreTirada(ArrayList<Integer> resultados, Jugador JugActiu) {
-		
-		
-		
+
+
+
 
 	}
 	// comunica con clase monstre para que al jugador habil se le cambie los stats
@@ -114,4 +116,50 @@ public class StartGame {
 	 * bien si tus puntis de victoria suben a 20 o mas.
 	 */
 
+
+	public void SetMonstreTokioAleatori() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		//Fiquem tots els resultats
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		int random = (int) Math.random() * llistaMonstres.size();
+		for (int i = 0; i < llistaMonstres.size(); i++) {
+			if(random == i) {
+				llistaMonstres.get(i).setToquio(true);
+				System.out.println("S' ha ubicat a Toquio el monstre " + llistaMonstres.get(i).getNom() + ".");
+			} else {
+				llistaMonstres.get(i).setToquio(false);
+			}
+		}
+
+		for (Monstre monstre : llistaMonstres) {
+			monstreDAO.Update(monstre);
+		}
+	}
+
+	public boolean HiHaMonstreTokio() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		for (Monstre monstre : llistaMonstres) {
+			if(monstre.isToquio()) {
+				System.out.println("Hi ha un monstre a Toquio. Nom: " + monstre.getNom());
+				return true;
+			}
+		}
+		return false;
+	}
+	public int ComprovarMonstres() {
+
+		int vius = 0;
+
+		MonstreDAO mons = new MonstreDAO();
+		List<Monstre> monsList = mons.listar();
+
+		for (Monstre mon : monsList) {
+			if (!mon.isEleminat()) {
+				System.out.println(mon.getNom() + " esta encara viu i te " + mon.getVides() + "!!");
+				vius++;
+			}
+		}
+		return vius;
+	}
 }

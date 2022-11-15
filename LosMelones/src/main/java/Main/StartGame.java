@@ -1,7 +1,14 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
+
+import DAO.MonstreDAO;
+import Model.Monstre;
 
 public class StartGame {
 	
@@ -69,6 +76,25 @@ public class StartGame {
 		 * Condiciones de victoria: si eres el unico monstruo vivo o bien si tus puntis de victoria suben a 20 o mas.
 		*/
 		
+	}
+	
+	private void SetMonstreTokioAleatori() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		//Fiquem tots els resultats 
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		int random = (int) Math.random() * llistaMonstres.size();
+		for (int i = 0; i < llistaMonstres.size(); i++) {
+			if(random == i) {
+				llistaMonstres.get(i).setToquio(true);
+				System.out.println("S' ha ubicat a Toquio el monstre " + llistaMonstres.get(i).getNom() + ".");
+			} else {
+				llistaMonstres.get(i).setToquio(false);
+			}
+		}
+		
+		for (Monstre monstre : llistaMonstres) {
+			monstreDAO.Update(monstre);
+		}
 	}
 	
 	

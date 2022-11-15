@@ -59,6 +59,10 @@ public class NovaPartida {
 		monstres.add(monstre5);
 		monstres.add(monstre6);
 		
+		/* Per testejar si lo de la carta poder funciona */
+		//Monstre monstreCarta = new Monstre(partida, "Carta de poder exemple");
+		//monstreDAO.Insert(monstreCarta);
+		
 		/*Seleccionem un monstre aleatori de la llista, li assignem a un jugador i ho assignem a la partida*/
 		for (int i = 0; i < this.nJugadors; i++) {
 			Jugador seguentJugador = jugadors.get(i);
@@ -68,6 +72,7 @@ public class NovaPartida {
 			monstreAleatori.setJugador(seguentJugador);
 			monstreAleatori.setPartida(partida);
 			jugadorDAO.Insert(seguentJugador);
+			//monstreAleatori.setMonstreCarta(monstreCarta);	//Per testejar si lo de la carta de poder funciona		
 			monstreDAO.Insert(monstreAleatori);
 		}
 		

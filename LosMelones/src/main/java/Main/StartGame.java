@@ -1,7 +1,11 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import DAO.JugadorDAO;
+import Model.Jugador;
 
 public class StartGame {
 	
@@ -12,7 +16,7 @@ public class StartGame {
 	public StartGame(int nJugadors) {
 		super();
 		this.nJugadors = nJugadors;
-		GenerarPartida();
+		Jugar();
 	}
 
 	public int getnJugadors() {
@@ -23,15 +27,12 @@ public class StartGame {
 		this.nJugadors = nJugadors;
 	}
 	
-
-	private void GenerarPartida() {
-		Jugar();
-	}
 	
 	private void Jugar() {
 		boolean FiPartida=false;
 		while(!FiPartida) {
-			//esta funcion ha de coger el turno de los jugadores
+			JugadorDAO jugadorDao = new JugadorDAO();
+			List<Jugador> jugadors = jugadorDao.listar();
 			SeleccionarTorn();
 		}
 	}
@@ -45,13 +46,11 @@ public class StartGame {
 	
 	private void TirarDaus() {
 		//Función de simulacion de tiradas de dados	
-		int cont1=0;
-		int cont2=0;
-		int cont3=0;
-		int contEnergy=0;
-		int contGarra=0;
-		int contCorazon=0;
-
+		ArrayList<Integer>resultadosDados= new ArrayList<Integer>();
+		for (int i = 0; i < 6; i++) {
+			resultadosDados.add(0);
+		}
+		int var=0;
 		Random azar= new Random();
 		int dau;
 		for (int i = 0; i < 6; i++) {
@@ -59,37 +58,37 @@ public class StartGame {
 			
 			switch (dau) {
 			case 1: 
-				cont1++;
+				var = resultadosDados.get(0) + 1;
+				resultadosDados.set(0, var);
 				break;
 			case 2:
-				cont2++;
+				var = resultadosDados.get(1) + 1;
+				resultadosDados.set(1, var);
 				break;
 			case 3:
-				cont3++;
+				var = resultadosDados.get(2) + 1;
+				resultadosDados.set(2, var);
 				break;
 			case 4:
-				contEnergy++;
+				var = resultadosDados.get(3) + 1;
+				resultadosDados.set(3, var);
 				break;
 			case 5:
-				contGarra++;
+				var = resultadosDados.get(4) + 1;
+				resultadosDados.set(4, var);
 				break;
 			case 6:
-				contCorazon++;
+				var = resultadosDados.get(5) + 1;
+				resultadosDados.set(5, var);
 				break;
 			}
 			
 		}
 		
-		System.out.println("Los resultados de la tirada són "+cont1+" unos, "+cont2+" doses, "+cont3+" treses, "
-		+contEnergy+" de energia, "+contGarra+" garras i "+contCorazon+" corazones.");
+		System.out.println("Los resultados de la tirada són "+resultadosDados.get(0)+" unos, "+resultadosDados.get(1)+" doses, "+resultadosDados.get(2)+" treses, "
+		+resultadosDados.get(3)+" de energia, "+resultadosDados.get(4)+" garras i "+resultadosDados.get(5)+" corazones.");
 		
-		ArrayList<Integer>resultadosDados= new ArrayList<Integer>();
-		resultadosDados.add(cont1);
-		resultadosDados.add(cont2);
-		resultadosDados.add(cont3);
-		resultadosDados.add(contEnergy);
-		resultadosDados.add(contGarra);
-		resultadosDados.add(contCorazon);
+
 	}
 		//resoldreTirada(Jugador jugador);
 		//comunica con clase monstre para que al jugador habil se le cambie los stats dependienddo de la tirada

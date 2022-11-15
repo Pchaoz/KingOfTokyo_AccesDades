@@ -3,6 +3,8 @@ package Main;
 import java.util.ArrayList;
 import java.util.Random;
 
+import DAO.PartidaDAO;
+
 public class StartGame {
 	
 	private int nJugadors;
@@ -70,7 +72,15 @@ public class StartGame {
 		*/
 		
 	}
-	
-	
+	private int ComprovarMonstres() {
+		
+		int vius = 0;
+		
+		//AQUEST METODE HA DE COMPROVAR EN UNA PARTIDA SI ELS MONSTRES DE TOTS ELS JUGADORS ESTA PER SOTA DE 1
+		PartidaDAO partida = new PartidaDAO();
+		
+		partida.get(1);
 
+		return vius;		
+	}
 }

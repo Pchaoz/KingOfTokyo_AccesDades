@@ -3,16 +3,14 @@ package Main;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-
 import DAO.MonstreDAO;
 import Model.Monstre;
 
 public class StartGame {
-	
+
 	private int nJugadors;
-	
-	
+
+
 
 	public StartGame(int nJugadors) {
 		super();
@@ -27,29 +25,30 @@ public class StartGame {
 	public void setnJugadors(int nJugadors) {
 		this.nJugadors = nJugadors;
 	}
-	
+
 
 	private void GenerarPartida() {
 		Jugar();
 	}
-	
+
 	private void Jugar() {
 		boolean FiPartida=false;
+
 		while(!FiPartida) {
 			//esta funcion ha de coger el turno de los jugadores
 			SeleccionarTorn();
 		}
 	}
-	
-	
+
+
 	private void SeleccionarTorn(){
 		//cal comprobar si Tokio está lliure si cap
 		//mosntre está a tokyo llavors el mosntre actual entra
-		//TirarDaus();
+		TirarDaus();
 	}
-	
+
 	/*private void TirarDaus() {
-		//Función de simulacion de tiradas de dados	
+		//Función de simulacion de tiradas de dados
 		int cont1=0;
 		int cont2=0;
 		int cont3=0;
@@ -61,9 +60,9 @@ public class StartGame {
 		int dau;
 		for (int i = 0; i < 6; i++) {
 			dau= azar.nextInt(0,6+1);
-			
+
 			switch (dau) {
-			case 1: 
+			case 1:
 				cont1++;
 				break;
 			case 2:
@@ -82,12 +81,12 @@ public class StartGame {
 				contCorazon++;
 				break;
 			}
-			
+
 		}
-		
+
 		System.out.println("Los resultados de la tirada són "+cont1+" unos, "+cont2+" doses, "+cont3+" treses, "
 		+contEnergy+" de energia, "+contGarra+" garras i "+contCorazon+" corazones.");
-		
+
 		ArrayList<Integer>resultadosDados= new ArrayList<Integer>();
 		resultadosDados.add(cont1);
 		resultadosDados.add(cont2);
@@ -98,7 +97,7 @@ public class StartGame {
 	}*/
 		//resoldreTirada(Jugador jugador);
 		//comunica con clase monstre para que al jugador habil se le cambie los stats dependienddo de la tirada
-		
+
 		/*
 		 * Sumar puntos de victoria.
 		 * Sumar Vida
@@ -111,12 +110,12 @@ public class StartGame {
 		/*Cuanto poder teiens
 		 * Condiciones de victoria: si eres el unico monstruo vivo o bien si tus puntis de victoria suben a 20 o mas.
 		*/
-		
 
-	
+
+
 	public void SetMonstreTokioAleatori() {
 		MonstreDAO monstreDAO = new MonstreDAO();
-		//Fiquem tots els resultats 
+		//Fiquem tots els resultats
 		List<Monstre> llistaMonstres = monstreDAO.listar();
 		int random = (int) Math.random() * llistaMonstres.size();
 		for (int i = 0; i < llistaMonstres.size(); i++) {
@@ -127,12 +126,12 @@ public class StartGame {
 				llistaMonstres.get(i).setToquio(false);
 			}
 		}
-		
+
 		for (Monstre monstre : llistaMonstres) {
 			monstreDAO.Update(monstre);
 		}
 	}
-	
+
 	public boolean HiHaMonstreTokio() {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
@@ -144,7 +143,19 @@ public class StartGame {
 		}
 		return false;
 	}
-	
-	
+	public int ComprovarMonstres() {
 
+		int vius = 0;
+
+		MonstreDAO mons = new MonstreDAO();
+		List<Monstre> monsList = mons.listar();
+
+		for (Monstre mon : monsList) {
+			if (!mon.isEleminat()) {
+				System.out.println(mon.getNom() + " esta encara viu i te " + mon.getVides() + "!!");
+				vius++;
+			}
+		}
+		return vius;
+	}
 }

@@ -32,7 +32,7 @@ public class MainMelonero {
 			System.out.println("Jugaran "+numeroJugadors+" jugadors.");
 			System.out.println("----------------------------------------");
 			
-			
+			//StartGame st= new startGame(numeroJugadors);
 			
 			System.out.println("----------------------------------------");
 			System.out.println("Vols tornar a jugar? 1=SI, Qualsevol altre númer serà NO.");

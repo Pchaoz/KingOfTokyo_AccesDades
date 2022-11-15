@@ -19,7 +19,7 @@ public class Monstre {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_monstre", nullable=false)
-	private int id;
+	private int id_monstre;
 	
 	@ManyToOne
 	@JoinColumn(name="ID_Partida")
@@ -32,24 +32,28 @@ public class Monstre {
 	@Column(name="nom", nullable = false)
 	private String nom;
 	
-	@Column(name="vides", columnDefinition = "10", nullable=false)
+	@Column(name="vides", nullable=false)
 	private int vides;
 	
-	@Column(name="p_victoria", columnDefinition = "0", nullable=false)
+	@Column(name="p_victoria", nullable=false)
 	private int p_victoria;
 	
-	@Column(name="energia", columnDefinition =  "0", nullable=false)
+	@Column(name="energia", nullable=false)
 	private int energia;
 	
-	@Column(name="toquio", columnDefinition = "false", nullable=false)
+	@Column(name="toquio", nullable=false)
 	private boolean toquio;
 	
 	@Column(name="eliminat", nullable=false)
 	private boolean eleminat;
+
+	// NO POSAR CASCADETYPE EN EL CHILD JA QUE SI NO DONA ERROR DE PERSISTENCIA (detached entity passed to persist)
+	@OneToOne
+	@JoinColumn(name="id_monstreCarta")
+	private Monstre monstreCarta;
 	
-	@OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	@JoinColumn(name="id_monstre_poder")
-	private Monstre mons;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="monstreCarta")
+	private Monstre monstreCartaAssignat;
 
 	public Monstre(Partida partida, String nom) {
 		super();
@@ -73,15 +77,15 @@ public class Monstre {
 		this.energia = energia;
 		this.toquio = toquio;
 		this.eleminat = eleminat;
-		this.mons = mons;
+		this.monstreCarta = mons;
 	}
 
 	public int getId() {
-		return id;
+		return id_monstre;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.id_monstre = id;
 	}
 
 	public Partida getPartida() {
@@ -148,19 +152,27 @@ public class Monstre {
 		this.eleminat = eleminat;
 	}
 
-	public Monstre getMons() {
-		return mons;
+	public Monstre getMonstreCarta() {
+		return monstreCarta;
 	}
 
-	public void setMons(Monstre mons) {
-		this.mons = mons;
+	public void setMonstreCarta(Monstre monstreCarta) {
+		this.monstreCarta = monstreCarta;
+	}
+
+	public Monstre getMonstreCartaAssignat() {
+		return monstreCartaAssignat;
+	}
+
+	public void setMonstreCartaAssignat(Monstre monstreCartaAssignat) {
+		this.monstreCartaAssignat = monstreCartaAssignat;
 	}
 
 	@Override
 	public String toString() {
-		return "Monstre [id=" + id + ", partida=" + partida + ", jugador=" + jugador + ", nom=" + nom + ", vides="
+		return "Monstre [id_Monstre=" + id_monstre + ", partida=" + partida + ", jugador=" + jugador + ", nom=" + nom + ", vides="
 				+ vides + ", p_victoria=" + p_victoria + ", energia=" + energia + ", toquio=" + toquio + ", eleminat="
-				+ eleminat + ", mons=" + mons + "]";
+				+ eleminat + ", monstreCarta=" + monstreCarta + "]";
 	}
 	
 	

@@ -1,11 +1,9 @@
 package Main;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import DAO.MonstreDAO;
 import Model.Monstre;
@@ -19,7 +17,7 @@ public class StartGame {
 	public StartGame(int nJugadors) {
 		super();
 		this.nJugadors = nJugadors;
-		GenerarPartida();
+		//GenerarPartida();
 	}
 
 	public int getnJugadors() {
@@ -47,10 +45,10 @@ public class StartGame {
 	private void SeleccionarTorn(){
 		//cal comprobar si Tokio está lliure si cap
 		//mosntre está a tokyo llavors el mosntre actual entra
-		TirarDaus();
+		//TirarDaus();
 	}
 	
-	private void TirarDaus() {
+	/*private void TirarDaus() {
 		//Función de simulacion de tiradas de dados	
 		int cont1=0;
 		int cont2=0;
@@ -97,7 +95,7 @@ public class StartGame {
 		resultadosDados.add(contEnergy);
 		resultadosDados.add(contGarra);
 		resultadosDados.add(contCorazon);
-	}
+	}*/
 		//resoldreTirada(Jugador jugador);
 		//comunica con clase monstre para que al jugador habil se le cambie los stats dependienddo de la tirada
 		
@@ -116,7 +114,7 @@ public class StartGame {
 		
 
 	
-	private void SetMonstreTokioAleatori() {
+	public void SetMonstreTokioAleatori() {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		//Fiquem tots els resultats 
 		List<Monstre> llistaMonstres = monstreDAO.listar();
@@ -133,6 +131,18 @@ public class StartGame {
 		for (Monstre monstre : llistaMonstres) {
 			monstreDAO.Update(monstre);
 		}
+	}
+	
+	public boolean HiHaMonstreTokio() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		for (Monstre monstre : llistaMonstres) {
+			if(monstre.isToquio()) {
+				System.out.println("Hi ha un monstre a Toquio. Nom: " + monstre.getNom());
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	

@@ -1,9 +1,11 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-import DAO.PartidaDAO;
+import DAO.MonstreDAO;
+import Model.Monstre;
 
 public class StartGame {
 	
@@ -14,7 +16,7 @@ public class StartGame {
 	public StartGame(int nJugadors) {
 		super();
 		this.nJugadors = nJugadors;
-		GenerarPartida();
+		//GenerarPartida();
 	}
 
 	public int getnJugadors() {
@@ -33,7 +35,8 @@ public class StartGame {
 	
 	private void Jugar() {
 		boolean FiPartida=false;
-		while(FiPartida) {
+		
+		while(!FiPartida) {
 			//esta funcion ha de coger el turno de los jugadores
 			SeleccionarTorn();
 		}
@@ -44,6 +47,7 @@ public class StartGame {
 		//cal comprobar si Tokio está lliure si cap
 		//mosntre está a tokyo llavors el mosntre actual entra
 		TirarDaus();
+		System.out.println("Queden " + ComprovarMonstres() + " monstres vius");
 	}
 	
 	private void TirarDaus() {
@@ -72,15 +76,19 @@ public class StartGame {
 		*/
 		
 	}
-	private int ComprovarMonstres() {
+	public int ComprovarMonstres() {
 		
 		int vius = 0;
 		
-		//AQUEST METODE HA DE COMPROVAR EN UNA PARTIDA SI ELS MONSTRES DE TOTS ELS JUGADORS ESTA PER SOTA DE 1
-		PartidaDAO partida = new PartidaDAO();
+		MonstreDAO mons = new MonstreDAO();
+		List<Monstre> monsList = mons.listar();
 		
-		partida.get(1);
-
+		for (Monstre mon : monsList) {
+			if (!mon.isEleminat()) {
+				System.out.println(mon.getNom() + " esta encara viu i te " + mon.getVides() + "!!");
+				vius++;
+			}
+		}
 		return vius;		
 	}
 }

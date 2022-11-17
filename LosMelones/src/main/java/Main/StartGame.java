@@ -17,7 +17,7 @@ public class StartGame {
 	public StartGame(int nJugadors) {
 		super();
 		this.nJugadors = nJugadors;
-		Jugar();
+		//Jugar();
 	}
 
 	public int getnJugadors() {
@@ -358,6 +358,12 @@ public class StartGame {
 				monstre.setEleminat(true);
 			}
 		}
+		
+		for (Monstre monstre : llistaMonstres) {
+			monstreDAO.Update(monstre);
+		}
+		System.out.println("S' han actualitzat tots els monstres vius.");
+	}	
 
 	public Monstre GetMonstreToquio() {
 		MonstreDAO monstreDAO = new MonstreDAO();
@@ -389,6 +395,7 @@ public class StartGame {
 		for (Monstre monstre : llistaMonstres) {
 			if(!monstre.isEleminat()) {
 				llistaVius.add(monstre);
+				System.out.println(monstre.getNom() + " encara està viu!");
 			}
 		}
 		return llistaVius;

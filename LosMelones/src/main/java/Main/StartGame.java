@@ -162,4 +162,15 @@ public class StartGame {
 		}
 		return vius;
 	}
+	
+	public Monstre GetMonstreToquio() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		for (Monstre monstre : llistaMonstres) {
+			if(monstre.isToquio()) {
+				return monstre;
+			}
+		}
+		return null;
+	}
 }

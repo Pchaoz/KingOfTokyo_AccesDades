@@ -173,4 +173,16 @@ public class StartGame {
 		}
 		return null;
 	}
+	
+	public List<Monstre> ListMonstresViusContrincants(Monstre mons) {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> monstresContrincants = new ArrayList<Monstre>();
+		for (Monstre monstre : monstresContrincants) {
+			if(monstre.getId() != mons.getId() && !monstre.isEleminat()) {
+				monstresContrincants.add(monstre);
+			}
+		}
+		return monstresContrincants;
+	}
 }

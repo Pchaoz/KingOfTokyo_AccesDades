@@ -229,6 +229,8 @@ public class StartGame {
 				monstre.setP_victoria(var);
 				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+var+" punts, la seva puntuació actual es de "+monstre.getP_victoria()+" punts.");
 				monstreDAO.Update(monstre);
+				
+				
 			}
 		}
 		
@@ -287,6 +289,9 @@ public class StartGame {
 	}
 	
 	public void meQuedoOno(Monstre monstreTokyo,Monstre monstreAtacant) {
+		if(monstreTokyo.getVides()<=0) {
+			//monstreTokyo.isEleminat()
+		}
 		Random azar= new Random();
 		boolean meQuedo=azar.nextBoolean();
 		if(!meQuedo) {
@@ -320,13 +325,14 @@ public class StartGame {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
 		for (Monstre monstre : llistaMonstres) {
-			if(monstre.isToquio()) {
+			if (monstre.isToquio()) {
 				System.out.println("Hi ha un monstre a Toquio. Nom: " + monstre.getNom());
 				return true;
 			}
 		}
 		return false;
 	}
+
 	public int ComprovarMonstres() {
 
 		int vius = 0;
@@ -341,5 +347,16 @@ public class StartGame {
 			}
 		}
 		return vius;
+	}
+
+	public void ActualitzarMonstresVius() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		for (Monstre monstre : llistaMonstres) {
+			if (monstre.getVides() <= 0) {
+				System.out.println("El monstre "+monstre.getNom()+" té una vida de "+monstre.getVides()+" está eliminat!");
+				monstre.setEleminat(true);
+			}
+		}
 	}
 }

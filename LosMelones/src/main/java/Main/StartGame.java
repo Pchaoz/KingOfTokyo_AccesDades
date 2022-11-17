@@ -48,6 +48,8 @@ public class StartGame {
 			
 			if (topMon.getP_victoria() >= 20) {
 				//S'ACABA LA PARTIDA AMB EL MONSTRE AMB 20 PUNTS COM A GUANYADOR
+				//DE MOMENT SOLS ACABA LA PARTIDA
+				FiPartida = true;
 			}else {
 				maximJugadors = ComprovarMonstres()-1;
 				
@@ -59,6 +61,8 @@ public class StartGame {
 					}
 				}else {
 					//S'ACABA LA PARTIDA AMB EL MONSTRE QUE SEGEUIX VIU
+					//DE MOMENT SOLS ACABA LA PARTIDA
+					FiPartida = true;
 				}
 			}	
 		}

@@ -34,12 +34,37 @@ public class StartGame {
 		JugadorDAO jugadorDao = new JugadorDAO();
 		List<Jugador> jugadors = jugadorDao.listar();
 		Collections.shuffle(jugadors);
+		int maximJugadors = nJugadors-1;
+		int jugadorActual = 0;
 
 		while (!FiPartida) {
 
-			System.out.println("Es el torn del jugador " + jugadors.get(0));
-			Jugador jugadorActiu = jugadors.get(0);
+			//COMENÇA EL TORN DEL JUGADOR X
+			System.out.println("Es el torn del jugador " + jugadors.get(jugadorActual));
+			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
+
+			Monstre topMon = MonstreMaxPuntVictoria();
+
+			if (topMon.getP_victoria() >= 20) {
+				//S'ACABA LA PARTIDA AMB EL MONSTRE AMB 20 PUNTS COM A GUANYADOR
+				//DE MOMENT SOLS ACABA LA PARTIDA
+				FiPartida = true;
+			}else {
+				maximJugadors = ComprovarMonstres()-1;
+
+				if (maximJugadors < 2) {
+					jugadorActual++;
+
+					if (jugadorActual > maximJugadors) {
+						jugadorActual = 0;
+					}
+				}else {
+					//S'ACABA LA PARTIDA AMB EL MONSTRE QUE SEGEUIX VIU
+					//DE MOMENT SOLS ACABA LA PARTIDA
+					FiPartida = true;
+				}
+			}
 		}
 	}
 
@@ -348,6 +373,22 @@ public class StartGame {
 		}
 		return vius;
 	}
+	public Monstre MonstreMaxPuntVictoria() {
+
+		MonstreDAO mons = new MonstreDAO();
+		List<Monstre> monsList = mons.listar();
+		Monstre topMon = new Monstre();
+
+		for (Monstre mon : monsList) {
+			int max = -1;
+
+			if (mon.getP_victoria() > max) {
+				topMon = mon;
+			}
+		}
+		return topMon;
+	}
+
 
 	public void ActualitzarMonstresVius() {
 		MonstreDAO monstreDAO = new MonstreDAO();

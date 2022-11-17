@@ -44,13 +44,23 @@ public class StartGame {
 			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
 			
-			maximJugadors = ComprovarMonstres()-1;
+			Monstre topMon = MonstreMaxPuntVictoria();
 			
-			jugadorActual++;
-			
-			if (jugadorActual > maximJugadors) {
-				jugadorActual = 0;
-			}
+			if (topMon.getP_victoria() >= 20) {
+				//S'ACABA LA PARTIDA AMB EL MONSTRE AMB 20 PUNTS COM A GUANYADOR
+			}else {
+				maximJugadors = ComprovarMonstres()-1;
+				
+				if (maximJugadors < 2) {
+					jugadorActual++;
+					
+					if (jugadorActual > maximJugadors) {
+						jugadorActual = 0;
+					}
+				}else {
+					//S'ACABA LA PARTIDA AMB EL MONSTRE QUE SEGEUIX VIU
+				}
+			}	
 		}
 	}
 
@@ -352,6 +362,21 @@ public class StartGame {
 			}
 		}
 		return vius;
+	}
+	public Monstre MonstreMaxPuntVictoria() {
+		
+		MonstreDAO mons = new MonstreDAO();
+		List<Monstre> monsList = mons.listar();
+		Monstre topMon = new Monstre();
+		
+		for (Monstre mon : monsList) {
+			int max = -1;
+			
+			if (mon.getP_victoria() > max) {
+				topMon = mon;
+			}
+		}
+		return topMon;
 	}
 	
 	public Monstre GetMonstreToquio() {

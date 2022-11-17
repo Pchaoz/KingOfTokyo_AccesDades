@@ -34,12 +34,23 @@ public class StartGame {
 		JugadorDAO jugadorDao = new JugadorDAO();
 		List<Jugador> jugadors = jugadorDao.listar();
 		Collections.shuffle(jugadors);
+		int maximJugadors = nJugadors-1;
+		int jugadorActual = 0;
 
 		while (!FiPartida) {
-
-			System.out.println("Es el torn del jugador " + jugadors.get(0));
-			Jugador jugadorActiu = jugadors.get(0);
+			
+			//COMENÇA EL TORN DEL JUGADOR X
+			System.out.println("Es el torn del jugador " + jugadors.get(jugadorActual));
+			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
+			
+			maximJugadors = ComprovarMonstres()-1;
+			
+			jugadorActual++;
+			
+			if (jugadorActual > maximJugadors) {
+				jugadorActual = 0;
+			}
 		}
 	}
 

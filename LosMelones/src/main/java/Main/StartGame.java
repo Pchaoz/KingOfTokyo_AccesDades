@@ -182,7 +182,7 @@ public class StartGame {
 	 * Cuanto poder teiens Condiciones de victoria: si eres el unico monstruo vivo o
 	 * bien si tus puntis de victoria suben a 20 o mas.
 	 */
-	
+
 
 	public void SetMonstreTokyo(Jugador jug) {
 		MonstreDAO monstreDAO = new MonstreDAO();
@@ -191,7 +191,7 @@ public class StartGame {
 			if(monstre.getJugador()==jug) {
 				monstre.setToquio(true);
 				System.out.println("Sha ubicat a Tokyo el monstre "+monstre.getNom()+".");
-				
+
 			}else {
 				monstre.setToquio(false);
 			}
@@ -200,7 +200,7 @@ public class StartGame {
 			monstreDAO.Update(monstre);
 		}
 	}
-	
+
 	public void SetMonstreTokioAleatori() {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		//Fiquem tots els resultats
@@ -229,9 +229,11 @@ public class StartGame {
 				monstre.setP_victoria(var);
 				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+var+" punts, la seva puntuació actual es de "+monstre.getP_victoria()+" punts.");
 				monstreDAO.Update(monstre);
+
+
 			}
 		}
-		
+
 	}
 	//funcio per guanyar punts d'energia
 	public void SumarPuntsEnergiaMonstre(Jugador jug, int suma) {
@@ -245,7 +247,7 @@ public class StartGame {
 				monstreDAO.Update(monstre);
 			}
 		}
-		
+
 	}
 	//funco per a que mosntre pegui als altres monstres
 	public void MonstrePega(Jugador jug, int suma) {
@@ -273,20 +275,23 @@ public class StartGame {
 							System.out.println("El Monstre "+monstreTokyo.getNom()+" está a Tokyo i es atacat per "+monstre.getNom()+" li fa un total de "+suma+" punts de mal, la seva vida actual es de "+monstreTokyo.getVides()+".");
 							//funcio per si mosntre es queda o no
 							meQuedoOno(monstreTokyo,monstre);
-							
+
 						}
 				}
-					
+
 				}
 			}
 		}
 		for (Monstre monstre : llistaMonstres) {
 			monstreDAO.Update(monstre);
 		}
-		
+
 	}
-	
+
 	public void meQuedoOno(Monstre monstreTokyo,Monstre monstreAtacant) {
+		if(monstreTokyo.getVides()<=0) {
+			//monstreTokyo.isEleminat()
+		}
 		Random azar= new Random();
 		boolean meQuedo=azar.nextBoolean();
 		if(!meQuedo) {
@@ -299,7 +304,7 @@ public class StartGame {
 			System.out.println("El monstre "+monstreTokyo.getNom()+" esta fet un toro, aguanta en Tokyo!");
 		}
 	}
-	
+
 	public void MonstreCuracio(Jugador jug, int suma){
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
@@ -320,13 +325,14 @@ public class StartGame {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
 		for (Monstre monstre : llistaMonstres) {
-			if(monstre.isToquio()) {
+			if (monstre.isToquio()) {
 				System.out.println("Hi ha un monstre a Toquio. Nom: " + monstre.getNom());
 				return true;
 			}
 		}
 		return false;
 	}
+
 	public int ComprovarMonstres() {
 
 		int vius = 0;
@@ -342,7 +348,17 @@ public class StartGame {
 		}
 		return vius;
 	}
-	
+
+	public void ActualitzarMonstresVius() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		for (Monstre monstre : llistaMonstres) {
+			if (monstre.getVides() <= 0) {
+				System.out.println("El monstre "+monstre.getNom()+" té una vida de "+monstre.getVides()+" está eliminat!");
+				monstre.setEleminat(true);
+			}
+		}
+
 	public Monstre GetMonstreToquio() {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
@@ -353,7 +369,7 @@ public class StartGame {
 		}
 		return null;
 	}
-	
+
 	public List<Monstre> ListMonstresViusContrincants(Monstre mons) {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
@@ -365,7 +381,7 @@ public class StartGame {
 		}
 		return monstresContrincants;
 	}
-	
+
 	public List<Monstre> ListMonstresVius() {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();

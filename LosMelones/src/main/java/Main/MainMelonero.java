@@ -1,24 +1,40 @@
 package Main;
 
+import java.util.List;
 import java.util.Scanner;
+
+import Model.Monstre;
 
 public class MainMelonero {
 
+	
+	
 	public static void main(String[] args) {
 		
-	
-		boolean jugar= true;
+		Scanner scan = new Scanner(System.in);
 		
-		int numeroJugadors=4;
-		
+		boolean jugar = true;
+		int numeroJugadors=0;
+		/****MENU PRINCIPAL****/
+		System.out.println("Benvinguts a King of Tokio, \n"+
+		"Sisplau, indiqui número de jugadors per aquesta partida: ");
+		numeroJugadors = scan.nextInt();
+		System.out.println("Creant una partida per a " + numeroJugadors + " jugadors, esperi.");
+		StartGame sg = new StartGame(numeroJugadors);
 		NovaPartida partida1 = new NovaPartida(numeroJugadors);
-		
 		partida1.carregarDades();
 		
-		StartGame sg = new StartGame(numeroJugadors);
 		sg.SetMonstreTokioAleatori();
-		System.out.println(sg.HiHaMonstreTokio());
+		List<Monstre> monstresVius = sg.ListMonstresVius();
+		for (Monstre monstre : monstresVius) {
+			System.out.println(monstre.getNom() + " encara està viu!");
+		}
 		
 		
+		
+		
+		scan.close();
+		
+				
 	}
 }

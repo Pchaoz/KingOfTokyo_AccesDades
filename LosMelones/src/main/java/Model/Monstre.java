@@ -28,10 +28,10 @@ public class Monstre {
 	@ManyToOne
 	@JoinColumn(name="ID_Jugador")
 	private Jugador jugador;
-	
+	//Limitar 50 caracteres
 	@Column(name="nom", nullable = false)
 	private String nom;
-	
+	//Limitar 50 vides
 	@Column(name="vides", nullable=false)
 	private int vides;
 	

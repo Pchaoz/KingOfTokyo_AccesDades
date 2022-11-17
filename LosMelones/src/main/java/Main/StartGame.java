@@ -365,4 +365,16 @@ public class StartGame {
 		}
 		return monstresContrincants;
 	}
+	
+	public List<Monstre> ListMonstresVius() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> llistaVius = new ArrayList<Monstre>();
+		for (Monstre monstre : llistaMonstres) {
+			if(!monstre.isEleminat()) {
+				llistaVius.add(monstre);
+			}
+		}
+		return llistaVius;
+	}
 }

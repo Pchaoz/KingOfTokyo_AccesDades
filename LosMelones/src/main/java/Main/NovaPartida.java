@@ -77,6 +77,22 @@ public class NovaPartida {
 			monstreDAO.Insert(monstreAleatori);
 		}
 		
+		/******Crear Monstres Poder******/
+		Monstre monstrePoder1 = new Monstre(partida, "Aliento Flamígero");
+		monstrePoder1.setEnergia(3);
+		Monstre monstrePoder2 = new Monstre(partida, "Mimetismo");
+		monstrePoder2.setEnergia(8);
+		Monstre monstrePoder3 = new Monstre(partida, "Rayo Reductor");
+		monstrePoder3.setEnergia(6);
+		Monstre monstrePoder4 = new Monstre(partida, "Monstruo Escupidor de Veneno");
+		monstrePoder4.setEnergia(4);
+		
+		monstreDAO.Insert(monstrePoder1);
+		monstreDAO.Insert(monstrePoder2);
+		monstreDAO.Insert(monstrePoder3);
+		monstreDAO.Insert(monstrePoder4);
+		
+		
 	}
 	
 }

@@ -22,7 +22,7 @@ public class MainMelonero {
 		System.out.println("Creant una partida per a " + numeroJugadors + " jugadors, esperi.");
 		StartGame sg = new StartGame(numeroJugadors);
 		NovaPartida partida1 = new NovaPartida(numeroJugadors);
-		//partida1.carregarDades();
+		partida1.carregarDades();
 		
 		sg.SetMonstreTokioAleatori();
 		List<Monstre> monstresVius = sg.ListMonstresVius();

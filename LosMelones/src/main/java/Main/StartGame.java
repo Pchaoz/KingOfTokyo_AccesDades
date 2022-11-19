@@ -449,4 +449,65 @@ public class StartGame {
 			
 		}
 	}
+	
+	public void ComprarCarta(Monstre mons) {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		if(mons.getMonstreCarta() == null) {
+			if(mons.getEnergia() >= 8) {
+				
+			} else if (mons.getEnergia() >= 6) {
+				
+			} else if (mons.getEnergia() >= 4) {
+				
+			} else if (mons.getEnergia() >= 3) {
+				
+			}
+		}
+	}
+	
+	public List<Monstre> ListMonstrePoderLliure() {
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> monstresPoderLliures = new ArrayList<Monstre>();
+		for (Monstre monstre : llistaMonstres) {
+			//Falta que el Eloi me responda al discord para ver si podemos añadir nuevo atributo a la tabla Monstre (esCarta)
+		}
+		
+		return monstresPoderLliures;
+	}
+	
+	public void UtilitzaCartaPoder(Monstre mons) {
+		if(mons.getMonstreCarta() != null) {
+			Monstre monstrePoder = mons.getMonstreCarta();
+			if(monstrePoder.getNom().contains("Aliento")) {
+				AlientoFlamigero(mons);
+			}
+			if(monstrePoder.getNom().contains("Mimetismo")) {
+				Mimetismo(mons);
+			}
+			if(monstrePoder.getNom().contains("Rayo Reductor")) {
+				RayoReductor(mons);
+			}
+			if(monstrePoder.getNom().contains("Monstruo Escupidor")) {
+				MonstruoEscupidor(mons);
+			}
+		}
+	}
+	
+	public void AlientoFlamigero(Monstre mons) {
+		
+	}
+	
+	public void Mimetismo(Monstre mons) {
+			
+	}
+	
+	public void RayoReductor(Monstre mons) {
+		
+	}
+	
+	public void MonstruoEscupidor(Monstre mons) {
+		
+	}
 }

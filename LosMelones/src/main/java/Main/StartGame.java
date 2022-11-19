@@ -399,16 +399,16 @@ public class StartGame {
 				monstre.setEleminat(true);
 			}
 		}
-<<<<<<< Updated upstream
+
 		
 		for (Monstre monstre : llistaMonstres) {
 			monstreDAO.Update(monstre);
 		}
 		System.out.println("S' han actualitzat tots els monstres vius.");
 	}	
-=======
-	}
->>>>>>> Stashed changes
+
+	
+
 
 	public Monstre GetMonstreToquio() {
 		MonstreDAO monstreDAO = new MonstreDAO();

@@ -46,6 +46,9 @@ public class Monstre {
 	
 	@Column(name="eliminat", nullable=false)
 	private boolean eleminat;
+	
+	@Column(name="isCarta", nullable=false)
+	private boolean isCarta;
 
 	// NO POSAR CASCADETYPE EN EL CHILD JA QUE SI NO DONA ERROR DE PERSISTENCIA (detached entity passed to persist)
 	@OneToOne
@@ -154,6 +157,14 @@ public class Monstre {
 
 	public void setEleminat(boolean eleminat) {
 		this.eleminat = eleminat;
+	}
+	
+	public boolean isCarta() {
+		return isCarta;
+	}
+
+	public void setCarta(boolean isCarta) {
+		this.isCarta = isCarta;
 	}
 
 	public Monstre getMonstreCarta() {

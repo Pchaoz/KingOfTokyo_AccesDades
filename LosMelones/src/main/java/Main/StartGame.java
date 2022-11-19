@@ -448,16 +448,15 @@ public class StartGame {
 	
 	public void SolvePowerCards(Monstre mons) {
 		if(mons.getMonstreCarta() != null) {
-			
+			UtilitzaCartaPoder(mons);
 		} else {
-			
+			ComprarCarta(mons);
 		}
 	}
 	
 	public void ComprarCarta(Monstre mons) {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
 		if(mons.getMonstreCarta() == null) {
+			int random = (int) (Math.random() * 4);
 			if(mons.getEnergia() >= 8) {
 				
 			} else if (mons.getEnergia() >= 6) {
@@ -475,9 +474,14 @@ public class StartGame {
 		List<Monstre> llistaMonstres = monstreDAO.listar();
 		List<Monstre> monstresPoderLliures = new ArrayList<Monstre>();
 		for (Monstre monstre : llistaMonstres) {
-			//Falta que el Eloi me responda al discord para ver si podemos añadir nuevo atributo a la tabla Monstre (esCarta)
+			if(monstre.isCarta()) {
+				if(monstre.getMonstreCarta() == null) {
+					System.out.println("La carta de poder " + monstre.getNom() + " no es troba associada a cap Jugador.");
+					monstresPoderLliures.add(monstre);
+				}
+			}
 		}
-		
+		System.out.println("Es retorna la llista amb els monstres de poder lliures.");
 		return monstresPoderLliures;
 	}
 	
@@ -485,33 +489,58 @@ public class StartGame {
 		if(mons.getMonstreCarta() != null) {
 			Monstre monstrePoder = mons.getMonstreCarta();
 			if(monstrePoder.getNom().contains("Aliento")) {
+				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				AlientoFlamigero(mons);
 			}
 			if(monstrePoder.getNom().contains("Mimetismo")) {
+				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				Mimetismo(mons);
 			}
 			if(monstrePoder.getNom().contains("Rayo Reductor")) {
+				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				RayoReductor(mons);
 			}
 			if(monstrePoder.getNom().contains("Monstruo Escupidor")) {
+				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				MonstruoEscupidor(mons);
 			}
 		}
 	}
 	
 	public void AlientoFlamigero(Monstre mons) {
-		
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		for (Monstre monstre : llistaMonstres) {
+			if(!monstre.isCarta()) {
+				if(monstre.getNom() != mons.getNom()) {
+					System.out.println("Aliento Flamígero hace 1 punto de daño a " + monstre.getNom());
+					monstre.setVides(monstre.getVides()-1);
+					monstreDAO.Update(monstre);
+					mons.setMonstreCarta(null);
+					monstreDAO.Update(mons);
+				}
+			}
+		}
 	}
 	
 	public void Mimetismo(Monstre mons) {
-			
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		
 	}
 	
 	public void RayoReductor(Monstre mons) {
-		
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
+		for (Monstre monstre : llistaMonstres) {
+			if(!monstre.isCarta() && monstre.getNom() != mons.getNom()) {
+				
+			}
+		}
 	}
 	
 	public void MonstruoEscupidor(Monstre mons) {
-		
+		MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = monstreDAO.listar();
 	}
 }

@@ -72,6 +72,7 @@ public class NovaPartida {
 			Monstre monstreAleatori = monstres.get(i);
 			monstreAleatori.setJugador(seguentJugador);
 			monstreAleatori.setPartida(partida);
+			monstreAleatori.setCarta(false);
 			jugadorDAO.Insert(seguentJugador);
 			//monstreAleatori.setMonstreCarta(monstreCarta);	//Per testejar si lo de la carta de poder funciona		
 			monstreDAO.Insert(monstreAleatori);
@@ -80,12 +81,16 @@ public class NovaPartida {
 		/******Crear Monstres Poder******/
 		Monstre monstrePoder1 = new Monstre(partida, "Aliento Flamígero");
 		monstrePoder1.setEnergia(3);
+		monstrePoder1.setCarta(true);
 		Monstre monstrePoder2 = new Monstre(partida, "Mimetismo");
 		monstrePoder2.setEnergia(8);
+		monstrePoder2.setCarta(true);
 		Monstre monstrePoder3 = new Monstre(partida, "Rayo Reductor");
 		monstrePoder3.setEnergia(6);
+		monstrePoder3.setCarta(true);
 		Monstre monstrePoder4 = new Monstre(partida, "Monstruo Escupidor de Veneno");
 		monstrePoder4.setEnergia(4);
+		monstrePoder4.setCarta(true);
 		
 		monstreDAO.Insert(monstrePoder1);
 		monstreDAO.Insert(monstrePoder2);

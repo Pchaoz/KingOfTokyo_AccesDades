@@ -441,4 +441,12 @@ public class StartGame {
 		}
 		return llistaVius;
 	}
+	
+	public void SolvePowerCards(Monstre mons) {
+		if(mons.getMonstreCarta() != null) {
+			
+		} else {
+			
+		}
+	}
 }

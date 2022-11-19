@@ -28,7 +28,7 @@ public class StartGame {
 		this.nJugadors = nJugadors;
 	}
 
-	private void Jugar() {
+	public void Jugar() {
 		boolean FiPartida = false;
 
 		JugadorDAO jugadorDao = new JugadorDAO();

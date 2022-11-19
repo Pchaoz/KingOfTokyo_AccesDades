@@ -11,11 +11,16 @@ public class MainMelonero {
 	
 	public static void main(String[] args) {
 		
-		Scanner scan = new Scanner(System.in);
+		
+		
+		MenuKing mk1= new MenuKing("mk1");
+		mk1.MenuStart();
+		/*Scanner scan = new Scanner(System.in);
 		
 		boolean jugar = true;
-		int numeroJugadors=0;
+		int numeroJugadors=0;*/
 		/****MENU PRINCIPAL****/
+		/*
 		System.out.println("Benvinguts a King of Tokio, \n"+
 		"Sisplau, indiqui número de jugadors per aquesta partida: ");
 		numeroJugadors = scan.nextInt();
@@ -31,7 +36,7 @@ public class MainMelonero {
 		
 		
 		scan.close();
-		
+		*/
 				
 	}
 }

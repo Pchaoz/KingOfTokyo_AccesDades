@@ -14,12 +14,17 @@ public class StartGame {
 
 	private int nJugadors;
 	private MonstreDAO monstreDAO;
+	private JugadorDAO jugadorDAO;
+	private Monstre monstreGuanyador;
+	private boolean fiPartida;
 
 	public StartGame(int nJugadors) {
 		super();
 		this.nJugadors = nJugadors;
-		monstreDAO = new MonstreDAO();
-		//Jugar();
+		this.monstreDAO = new MonstreDAO();
+		this.jugadorDAO = new JugadorDAO();
+		this.fiPartida = false;
+		Jugar();
 	}
 
 	public int getnJugadors() {
@@ -31,27 +36,36 @@ public class StartGame {
 	}
 
 	public void Jugar() {
-		boolean FiPartida = false;
 
-		JugadorDAO jugadorDao = new JugadorDAO();
-		List<Jugador> jugadors = jugadorDao.listar();
+		List<Jugador> jugadors = jugadorDAO.listar();
 		Collections.shuffle(jugadors);
 		int maximJugadors = nJugadors-1;
 		int jugadorActual = 0;
+		
+		SetMonstreTokyo(jugadors.get(0));
 
-		while (!FiPartida) {
+		while (!fiPartida) {
 
 			//COMENÇA EL TORN DEL JUGADOR X
 			System.out.println("Es el torn del jugador " + jugadors.get(jugadorActual));
 			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
+			SolvePowerCards(jugadorActiu);
+			ComprovaVictoria();
+			
+			if(jugadorActual == maximJugadors) {
+				jugadorActual = 0;
+			} else {
+				jugadorActual++;
+			}
+			
+			
+			//Monstre topMon = MonstreMaxPuntVictoria();
 
-			Monstre topMon = MonstreMaxPuntVictoria();
-
-			if (topMon.getP_victoria() >= 20) {
+			/*if (topMon.getP_victoria() >= 20) {
 				//S'ACABA LA PARTIDA AMB EL MONSTRE AMB 20 PUNTS COM A GUANYADOR
 				//DE MOMENT SOLS ACABA LA PARTIDA
-				FiPartida = true;
+				fiPartida = true;
 			}else {
 				maximJugadors = ComprovarMonstres()-1;
 
@@ -64,9 +78,9 @@ public class StartGame {
 				}else {
 					//S'ACABA LA PARTIDA AMB EL MONSTRE QUE SEGEUIX VIU
 					//DE MOMENT SOLS ACABA LA PARTIDA
-					FiPartida = true;
+					fiPartida = true;
 				}
-			}
+			}*/
 		}
 	}
 
@@ -279,7 +293,7 @@ public class StartGame {
 	//funco per a que mosntre pegui als altres monstres
 	public void MonstrePega(Jugador jug, int suma) {
 		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		for(Monstre monstre : llistaMonstres) {
 			if(monstre.getJugador()==jug) {
 			//si el monstre del jugador está a Tokyo
@@ -307,12 +321,13 @@ public class StartGame {
 				}
 
 				}
+				
 			}
 		}
 		for (Monstre monstre : llistaMonstres) {
 			monstreDAO.Update(monstre);
 		}
-
+		ActualitzarMonstresVius();
 	}
 
 	public void meQuedoOno(Monstre monstreTokyo,Monstre monstreAtacant) {
@@ -448,7 +463,14 @@ public class StartGame {
 		return llistaVius;
 	}
 	
-	public void SolvePowerCards(Monstre mons) {
+	public void SolvePowerCards(Jugador jug) {
+		List<Monstre> monstresLlista = ListMonstresVius();
+		Monstre mons = null;
+		for (Monstre monstre : monstresLlista) {
+			if(jug == monstre.getJugador()) {
+				mons = monstre;
+			}
+		}
 		int random = (int) Math.random();
 		if(mons.getMonstreCarta() != null) {
 			if(random == 1)
@@ -619,4 +641,26 @@ public class StartGame {
 		monsTarget.setVides(monsTarget.getVides()-1);
 		monstreDAO.Update(monsTarget);		
 	}
+	
+	public void ComprovaVictoria() {
+		List<Monstre> llistaMonstres = ListMonstresVius();
+		if(llistaMonstres.size() == 1) {
+			Monstre mons = llistaMonstres.get(0);
+			System.out.println(mons.getNom() + " guanya per ser l' únic monstre viu!");
+			this.monstreGuanyador = mons;
+			this.fiPartida = true;
+			return;
+		} else {
+			for (Monstre monstre : llistaMonstres) {
+				if(monstre.getP_victoria() >= 20) {
+					System.out.println(monstre.getNom() + " guanya per haver obtingut 20 punts de victoria o més!");
+					this.monstreGuanyador = monstre;
+					this.fiPartida = true;
+					return;
+				}
+			}
+		}
+	}
+	
+	
 }

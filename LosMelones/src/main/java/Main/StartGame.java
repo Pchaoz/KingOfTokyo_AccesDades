@@ -24,7 +24,6 @@ public class StartGame {
 		this.monstreDAO = new MonstreDAO();
 		this.jugadorDAO = new JugadorDAO();
 		this.fiPartida = false;
-		Jugar();
 	}
 
 	public int getnJugadors() {
@@ -50,7 +49,14 @@ public class StartGame {
 			System.out.println("Es el torn del jugador " + jugadors.get(jugadorActual));
 			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
-			SolvePowerCards(jugadorActiu);
+			Monstre monstreActiu = null;
+			List<Monstre> monstresLlista = ListMonstresVius();
+			for (Monstre monstre : monstresLlista) {
+				if(monstre.getJugador() == jugadorActiu) {
+					monstreActiu = monstre;
+				}
+			}
+			SolvePowerCards(monstreActiu);
 			ComprovaVictoria();
 			
 			if(jugadorActual == maximJugadors) {
@@ -463,14 +469,14 @@ public class StartGame {
 		return llistaVius;
 	}
 	
-	public void SolvePowerCards(Jugador jug) {
-		List<Monstre> monstresLlista = ListMonstresVius();
-		Monstre mons = null;
-		for (Monstre monstre : monstresLlista) {
-			if(jug == monstre.getJugador()) {
-				mons = monstre;
-			}
-		}
+	public void SolvePowerCards(Monstre mons) {
+		//List<Monstre> monstresLlista = ListMonstresVius();
+		//Monstre mons = null;
+		//for (Monstre monstre : monstresLlista) {
+		//	if(monstre.getJugador()==jug) {
+		//		mons = monstre;
+		//	}
+		//}
 		int random = (int) Math.random();
 		if(mons.getMonstreCarta() != null) {
 			if(random == 1)

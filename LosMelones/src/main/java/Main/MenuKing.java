@@ -7,11 +7,9 @@ import Model.Monstre;
 
 public class MenuKing {
 	
-	String name;
-	
-	public MenuKing(String name) {
+
+	public MenuKing() {
 		super();
-		this.name = name;
 	}
 
 	public void MenuStart() {

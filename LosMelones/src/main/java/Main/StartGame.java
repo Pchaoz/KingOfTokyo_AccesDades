@@ -427,7 +427,7 @@ public class StartGame {
 		//MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = ListMonstresVius();
 		List<Monstre> monstresContrincants = new ArrayList<Monstre>();
-		for (Monstre monstre : monstresContrincants) {
+		for (Monstre monstre : llistaMonstres) {
 			if(monstre.getId() != mons.getId()) {
 				monstresContrincants.add(monstre);
 			}

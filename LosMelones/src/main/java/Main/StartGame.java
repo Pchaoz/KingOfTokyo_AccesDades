@@ -13,10 +13,12 @@ import Model.Jugador;
 public class StartGame {
 
 	private int nJugadors;
+	private MonstreDAO monstreDAO;
 
 	public StartGame(int nJugadors) {
 		super();
 		this.nJugadors = nJugadors;
+		monstreDAO = new MonstreDAO();
 		//Jugar();
 	}
 
@@ -210,8 +212,8 @@ public class StartGame {
 
 
 	public void SetMonstreTokyo(Jugador jug) {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		//MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		for(Monstre monstre : llistaMonstres) {
 			if(monstre.getJugador()==jug) {
 				monstre.setToquio(true);
@@ -229,7 +231,7 @@ public class StartGame {
 	public void SetMonstreTokioAleatori() {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		//Fiquem tots els resultats
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		int random = (int) Math.random() * llistaMonstres.size();
 		for (int i = 0; i < llistaMonstres.size(); i++) {
 			if(random == i) {
@@ -391,7 +393,7 @@ public class StartGame {
 
 
 	public void ActualitzarMonstresVius() {
-		MonstreDAO monstreDAO = new MonstreDAO();
+		//MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
 		for (Monstre monstre : llistaMonstres) {
 			if (monstre.getVides() <= 0) {
@@ -411,8 +413,8 @@ public class StartGame {
 
 
 	public Monstre GetMonstreToquio() {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		//MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		for (Monstre monstre : llistaMonstres) {
 			if(monstre.isToquio()) {
 				return monstre;
@@ -422,11 +424,11 @@ public class StartGame {
 	}
 
 	public List<Monstre> ListMonstresViusContrincants(Monstre mons) {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		//MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		List<Monstre> monstresContrincants = new ArrayList<Monstre>();
 		for (Monstre monstre : monstresContrincants) {
-			if(monstre.getId() != mons.getId() && !monstre.isEleminat()) {
+			if(monstre.getId() != mons.getId()) {
 				monstresContrincants.add(monstre);
 			}
 		}
@@ -434,11 +436,11 @@ public class StartGame {
 	}
 
 	public List<Monstre> ListMonstresVius() {
-		MonstreDAO monstreDAO = new MonstreDAO();
+		//MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
 		List<Monstre> llistaVius = new ArrayList<Monstre>();
 		for (Monstre monstre : llistaMonstres) {
-			if(!monstre.isEleminat()) {
+			if(!monstre.isEleminat() && !monstre.isCarta()) {
 				llistaVius.add(monstre);
 				System.out.println(monstre.getNom() + " encara està viu!");
 			}
@@ -447,30 +449,79 @@ public class StartGame {
 	}
 	
 	public void SolvePowerCards(Monstre mons) {
+		int random = (int) Math.random();
 		if(mons.getMonstreCarta() != null) {
+			if(random == 1)
 			UtilitzaCartaPoder(mons);
 		} else {
+			if(random == 1)
 			ComprarCarta(mons);
 		}
 	}
 	
 	public void ComprarCarta(Monstre mons) {
+		List<Monstre> monstresCarta = ListMonstrePoderLliure();
+		Monstre aliento = null, mimetismo = null, rayo = null, veneno  = null;
+ 		for (Monstre monstre : monstresCarta) {
+			if(monstre.getNom().contains("Aliento"))
+				aliento = monstre;
+			if(monstre.getNom().contains("Mimetismo"))
+				mimetismo = monstre;
+			if(monstre.getNom().contains("Rayo Reductor"))
+				rayo = monstre;
+			if(monstre.getNom().contains("Monstruo Escupidor"))
+				veneno = monstre;
+		}
 		if(mons.getMonstreCarta() == null) {
-			int random = (int) (Math.random() * 4);
-			if(mons.getEnergia() >= 8) {
-				
-			} else if (mons.getEnergia() >= 6) {
-				
-			} else if (mons.getEnergia() >= 4) {
-				
-			} else if (mons.getEnergia() >= 3) {
-				
+			if(mons.getEnergia() >= 8 && mimetismo != null) {
+				if(mimetismo.getMonstreCarta() == null) {
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + mimetismo.getNom() + " per 8 energia i es queda amb " + mons.getEnergia());
+					mons.setEnergia(mons.getEnergia()-8);
+					mons.setMonstreCarta(mimetismo);
+					mimetismo.setMonstreCarta(mons);
+					monstreDAO.Update(mimetismo);
+					monstreDAO.Update(mons);
+					return;
+				}
+			}
+			if (mons.getEnergia() >= 6 && rayo != null) {
+				if(rayo.getMonstreCarta() == null) {
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + rayo.getNom() + " per 6 energia i es queda amb " + mons.getEnergia());
+					mons.setEnergia(mons.getEnergia()-6);
+					mons.setMonstreCarta(mimetismo);
+					rayo.setMonstreCarta(mons);
+					monstreDAO.Update(rayo);
+					monstreDAO.Update(mons);
+					return;
+				}
+			}
+			if (mons.getEnergia() >= 4 && veneno != null) {
+				if(veneno.getMonstreCarta() == null) {
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + veneno.getNom() + " per 4 energia i es queda amb " + mons.getEnergia());
+					mons.setEnergia(mons.getEnergia()-4);
+					mons.setMonstreCarta(mimetismo);
+					veneno.setMonstreCarta(mons);
+					monstreDAO.Update(veneno);
+					monstreDAO.Update(mons);
+					return;
+				}
+			}
+			if (mons.getEnergia() >= 3 && aliento != null) {
+				if(aliento.getMonstreCarta() == null) {
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + aliento.getNom() + " per 3 energia i es queda amb " + mons.getEnergia());
+					mons.setEnergia(mons.getEnergia()-3);
+					mons.setMonstreCarta(aliento);
+					rayo.setMonstreCarta(mons);
+					monstreDAO.Update(aliento);
+					monstreDAO.Update(mons);
+					return;
+				}
 			}
 		}
 	}
 	
 	public List<Monstre> ListMonstrePoderLliure() {
-		MonstreDAO monstreDAO = new MonstreDAO();
+		//MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = monstreDAO.listar();
 		List<Monstre> monstresPoderLliures = new ArrayList<Monstre>();
 		for (Monstre monstre : llistaMonstres) {
@@ -486,61 +537,86 @@ public class StartGame {
 	}
 	
 	public void UtilitzaCartaPoder(Monstre mons) {
+		//MonstreDAO monstreDAO = new MonstreDAO();
 		if(mons.getMonstreCarta() != null) {
 			Monstre monstrePoder = mons.getMonstreCarta();
 			if(monstrePoder.getNom().contains("Aliento")) {
 				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				AlientoFlamigero(mons);
+				mons.setMonstreCarta(null);
+				monstrePoder.setMonstreCarta(null);
 			}
 			if(monstrePoder.getNom().contains("Mimetismo")) {
 				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				Mimetismo(mons);
+				mons.setMonstreCarta(null);
+				monstrePoder.setMonstreCarta(null);
 			}
 			if(monstrePoder.getNom().contains("Rayo Reductor")) {
 				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				RayoReductor(mons);
+				mons.setMonstreCarta(null);
+				monstrePoder.setMonstreCarta(null);
 			}
 			if(monstrePoder.getNom().contains("Monstruo Escupidor")) {
 				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				MonstruoEscupidor(mons);
+				mons.setMonstreCarta(null);
+				monstrePoder.setMonstreCarta(null);
 			}
 		}
 	}
 	
 	public void AlientoFlamigero(Monstre mons) {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		//MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = ListMonstresViusContrincants(mons);
 		for (Monstre monstre : llistaMonstres) {
 			if(!monstre.isCarta()) {
-				if(monstre.getNom() != mons.getNom()) {
-					System.out.println("Aliento Flamígero hace 1 punto de daño a " + monstre.getNom());
+					System.out.println("Aliento Flamígero fa 1 punt de dany a " + monstre.getNom());
 					monstre.setVides(monstre.getVides()-1);
 					monstreDAO.Update(monstre);
-					mons.setMonstreCarta(null);
 					monstreDAO.Update(mons);
-				}
 			}
 		}
+		ActualitzarMonstresVius();
 	}
 	
 	public void Mimetismo(Monstre mons) {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
-		
+		//MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = ListMonstresViusContrincants(mons);
+		int random = (int) (Math.random() * llistaMonstres.size());
+		Monstre monsTarget = llistaMonstres.get(random);
+		System.out.println("Mimetismo intercanvia la vida i els punts de victoria de " + mons.getNom() + " amb " + monsTarget.getNom());
+		int vida1 = mons.getVides();
+		int vida2 = monsTarget.getVides();
+		int victoria1 = mons.getP_victoria();
+		int victoria2 = monsTarget.getP_victoria();
+		mons.setVides(vida2);
+		monsTarget.setVides(vida1);
+		mons.setP_victoria(victoria2);
+		monsTarget.setP_victoria(victoria1);
+		monstreDAO.Update(mons);
+		monstreDAO.Update(monsTarget);
 	}
 	
 	public void RayoReductor(Monstre mons) {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
-		for (Monstre monstre : llistaMonstres) {
-			if(!monstre.isCarta() && monstre.getNom() != mons.getNom()) {
-				
-			}
-		}
+		//MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = ListMonstresViusContrincants(mons);
+		int random = (int) (Math.random() * llistaMonstres.size());
+		Monstre monsTarget = llistaMonstres.get(random);
+		System.out.println("Rayo Reductor fa 1 punt de dany a " + monsTarget.getNom());
+		monsTarget.setVides(monsTarget.getVides()-1);
+		monstreDAO.Update(monsTarget);
+		ActualitzarMonstresVius();
 	}
 	
 	public void MonstruoEscupidor(Monstre mons) {
-		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		//MonstreDAO monstreDAO = new MonstreDAO();
+		List<Monstre> llistaMonstres = ListMonstresViusContrincants(mons);
+		int random = (int) (Math.random() * llistaMonstres.size());
+		Monstre monsTarget = llistaMonstres.get(random);
+		System.out.println("Monstruo Escupidor de Veneno treu 1 punt de victoria a " + monsTarget.getNom());
+		monsTarget.setVides(monsTarget.getVides()-1);
+		monstreDAO.Update(monsTarget);		
 	}
 }

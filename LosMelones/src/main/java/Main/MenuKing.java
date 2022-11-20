@@ -76,7 +76,7 @@ public class MenuKing {
 			case 3:
 				if (sg == null) {
 
-					System.out.println("Inicialitda dades per poder accedir!");
+					System.out.println("Inicialitza dades per poder accedir!");
 
 					break;
 

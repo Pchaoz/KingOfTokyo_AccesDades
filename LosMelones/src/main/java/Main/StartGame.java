@@ -229,7 +229,7 @@ public class StartGame {
 		//MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = ListMonstresVius();
 		for(Monstre monstre : llistaMonstres) {
-			if(monstre.getJugador()==jug) {
+			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				monstre.setToquio(true);
 				System.out.println("Sha ubicat a Tokyo el monstre "+monstre.getNom()+".");
 

@@ -86,6 +86,7 @@ public class StartGame {
 
 	private void TirarDaus(Jugador JugActiu) {
 
+		
 		ArrayList<Integer> resultadosDados = new ArrayList<Integer>();
 		for (int i = 0; i < 6; i++) {
 			resultadosDados.add(0);
@@ -128,7 +129,8 @@ public class StartGame {
 		System.out.println("Els resultats de les tirades son: " + resultadosDados.get(0) + " uns, "
 				+ resultadosDados.get(1) + " dosos, " + resultadosDados.get(2) + " tresos, " + resultadosDados.get(3)
 				+ " d'energia, " + resultadosDados.get(4) + " garres i " + resultadosDados.get(5) + " cors.");
-
+		
+		
 		resoldreTirada(resultadosDados, JugActiu);
 
 	}

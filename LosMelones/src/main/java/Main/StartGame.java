@@ -50,7 +50,7 @@ public class StartGame {
 			System.out.println("Es el torn del jugador " + jugadors.get(jugadorActual));
 			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
-			SolvePowerCards(jugadorActiu);
+			//SolvePowerCards(jugadorActiu);
 			ComprovaVictoria();
 			
 			if(jugadorActual == maximJugadors) {
@@ -165,7 +165,7 @@ public class StartGame {
 		}
 		//En cas de sumar punts per daus amb el numeru 2
 		if(resultados.get(1)>=3) {
-			switch (resultados.get(0)){
+			switch (resultados.get(1)){
 				case 3:
 					SumarPuntsMonstre(JugActiu, 2);
 					break;
@@ -182,7 +182,7 @@ public class StartGame {
 		}
 		//En cas de sumar punts per daus amb el numeru 3
 		if(resultados.get(2)>=3) {
-			switch (resultados.get(0)){
+			switch (resultados.get(2)){
 				case 3:
 					SumarPuntsMonstre(JugActiu, 3);
 					break;
@@ -265,12 +265,12 @@ public class StartGame {
 	//funcio per a sumar punts amb els valor de 1,2 y 3 enb els daus
 	public void SumarPuntsMonstre(Jugador jug, int suma) {
 		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		for(Monstre monstre : llistaMonstres) {
-			if(monstre.getJugador()==jug) {
+			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				int var= monstre.getP_victoria() + suma;
 				monstre.setP_victoria(var);
-				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+var+" punts, la seva puntuació actual es de "+monstre.getP_victoria()+" punts.");
+				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+suma+" punts, la seva puntuació actual es de "+monstre.getP_victoria()+" punts.");
 				monstreDAO.Update(monstre);
 
 
@@ -281,12 +281,12 @@ public class StartGame {
 	//funcio per guanyar punts d'energia
 	public void SumarPuntsEnergiaMonstre(Jugador jug, int suma) {
 		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		for(Monstre monstre : llistaMonstres) {
-			if(monstre.getJugador()==jug) {
+			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				int var= monstre.getEnergia() + suma;
 				monstre.setEnergia(var);
-				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+var+" punts d'energia, té un total "+monstre.getEnergia()+" punts d'energia.");
+				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+suma+" punts d'energia, té un total "+monstre.getEnergia()+" punts d'energia.");
 				monstreDAO.Update(monstre);
 			}
 		}
@@ -297,13 +297,13 @@ public class StartGame {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = ListMonstresVius();
 		for(Monstre monstre : llistaMonstres) {
-			if(monstre.getJugador()==jug) {
+			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 			//si el monstre del jugador está a Tokyo
 				if(monstre.isToquio()) {
 					//comprobo tots els monstres
 					for(Monstre monstreAtacat : llistaMonstres) {
 						//si el monstre no es el monstre que esta atacant
-						if(monstre!=monstreAtacat) {
+						if(monstre.getId()!=monstreAtacat.getId()) {
 							int var =monstreAtacat.getVides()-suma;
 							monstreAtacat.setVides(var);
 							System.out.println("El Monstre "+monstreAtacat.getNom()+" es atacat per "+monstre.getNom()+" li fa un total de "+suma+" punts de mal, la seva vida actual es de "+monstreAtacat.getVides()+".");
@@ -312,12 +312,23 @@ public class StartGame {
 				}else {
 					//busquem el monstre de Tokyo per fer-li mal
 					for (Monstre monstreTokyo : llistaMonstres) {
-						if(monstreTokyo.isToquio()) {
+						if(monstreTokyo.isToquio()&&monstre.getId()!=monstreTokyo.getId()) {
 							int var =monstreTokyo.getVides()-suma;
 							monstreTokyo.setVides(var);
 							System.out.println("El Monstre "+monstreTokyo.getNom()+" está a Tokyo i es atacat per "+monstre.getNom()+" li fa un total de "+suma+" punts de mal, la seva vida actual es de "+monstreTokyo.getVides()+".");
-							//funcio per si mosntre es queda o no
-							meQuedoOno(monstreTokyo,monstre);
+							//si el monstre de Tokyo mor llavors le monstre atacant es el nou rey de Tokyo
+							if(monstreTokyo.getVides()<=0) {
+								ActualitzarMonstresVius();
+								System.out.println("El monstre "+monstreTokyo.getNom()+" mor per les seves ferides!");
+								System.out.println("El monstre "+monstre.getNom()+" es el nou rey de Tokyo!");
+								monstreTokyo.setToquio(false);
+								monstre.setToquio(true);
+								
+							}else {
+								//funcio per si mosntre aguanta l'atac y colem saber si es queda o no
+								meQuedoOno(monstreTokyo,monstre);
+							}
+						
 
 						}
 				}
@@ -351,15 +362,18 @@ public class StartGame {
 
 	public void MonstreCuracio(Jugador jug, int suma){
 		MonstreDAO monstreDAO = new MonstreDAO();
-		List<Monstre> llistaMonstres = monstreDAO.listar();
+		List<Monstre> llistaMonstres = ListMonstresVius();
 		for(Monstre monstre : llistaMonstres) {
-			if(monstre.getJugador()==jug) {
+			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				if(!monstre.isToquio()) {
 					int var =monstre.getVides()+suma;
 					monstre.setVides(var);
-					System.out.println("El Monstre "+monstre.getNom()+" es cura un total de "+var+" punts de vida té un total "+monstre.getVides()+" punts dwe vida.");
+					System.out.println("El Monstre "+monstre.getNom()+" es cura un total de "+suma+" punts de vida té un total "+monstre.getVides()+" punts de vida.");
 
 					monstreDAO.Update(monstre);
+
+				}else {
+					System.out.println("El Monstre "+monstre.getNom()+" no es cura "+suma+" punts de vida perque está a Tokyo té un total "+monstre.getVides()+" punts de vida.");
 
 				}
 			}

@@ -50,7 +50,7 @@ public class StartGame {
 			System.out.println("Es el torn del jugador " + jugadors.get(jugadorActual));
 			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
-			//SolvePowerCards(jugadorActiu);
+			SolvePowerCards(jugadorActiu);
 			ComprovaVictoria();
 			
 			if(jugadorActual == maximJugadors) {

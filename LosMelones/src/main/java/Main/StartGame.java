@@ -24,6 +24,7 @@ public class StartGame {
 		this.monstreDAO = new MonstreDAO();
 		this.jugadorDAO = new JugadorDAO();
 		this.fiPartida = false;
+		Jugar();
 	}
 
 	public int getnJugadors() {
@@ -49,14 +50,7 @@ public class StartGame {
 			System.out.println("Es el torn del jugador " + jugadors.get(jugadorActual));
 			Jugador jugadorActiu = jugadors.get(jugadorActual);
 			TirarDaus(jugadorActiu);
-			Monstre monstreActiu = null;
-			List<Monstre> monstresLlista = ListMonstresVius();
-			for (Monstre monstre : monstresLlista) {
-				if(monstre.getJugador() == jugadorActiu) {
-					monstreActiu = monstre;
-				}
-			}
-			SolvePowerCards(monstreActiu);
+			SolvePowerCards(jugadorActiu);
 			ComprovaVictoria();
 			
 			if(jugadorActual == maximJugadors) {
@@ -100,7 +94,7 @@ public class StartGame {
 		Random azar = new Random();
 		int dau;
 		for (int i = 0; i < 6; i++) {
-			dau = azar.nextInt(0, 6 + 1);
+			dau = azar.nextInt(1, 7);
 
 			switch (dau) {
 			case 1:
@@ -237,7 +231,7 @@ public class StartGame {
 		for(Monstre monstre : llistaMonstres) {
 			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				monstre.setToquio(true);
-				System.out.println("Sha ubicat a Tokyo el monstre "+monstre.getNom()+".");
+				System.out.println("S'ha ubicat a Tokyo el monstre "+monstre.getNom()+".");
 
 			}else {
 				monstre.setToquio(false);
@@ -469,14 +463,14 @@ public class StartGame {
 		return llistaVius;
 	}
 	
-	public void SolvePowerCards(Monstre mons) {
-		//List<Monstre> monstresLlista = ListMonstresVius();
-		//Monstre mons = null;
-		//for (Monstre monstre : monstresLlista) {
-		//	if(monstre.getJugador()==jug) {
-		//		mons = monstre;
-		//	}
-		//}
+	public void SolvePowerCards(Jugador jug) {
+		List<Monstre> monstresLlista = ListMonstresVius();
+		Monstre mons = null;
+		for (Monstre monstre : monstresLlista) {
+			if(jug == monstre.getJugador()) {
+				mons = monstre;
+			}
+		}
 		int random = (int) Math.random();
 		if(mons.getMonstreCarta() != null) {
 			if(random == 1)

@@ -12,10 +12,26 @@ public class MainMelonero {
 	
 	public static void main(String[] args) {
 		
-		MenuKing menu = new MenuKing();
-		menu.MenuStart();
+MonstreDAO monstreDAO = new MonstreDAO();
 		
+		NovaPartida partida1 = new NovaPartida(4);
+		partida1.carregarDades();
+		StartGame sg1 = new StartGame(4);
 		
+		List<Monstre> monstrePoder = sg1.ListMonstrePoderLliure();
+		List<Monstre> monstresvius = sg1.ListMonstresVius();
+		
+		Monstre monstre = monstresvius.get(0);
+		Monstre carta = monstrePoder.get(0);
+		
+		monstre.setMonstreCarta(carta);
+		//carta.setMonstreCarta(monstre);
+		
+		//monstreDAO.Update(carta);
+		monstreDAO.Update(monstre);
+		
+		//MenuKing menu = new MenuKing();
+		//menu.MenuStart();
 		
 		//MenuKing mk1= new MenuKing("mk1");
 		//mk1.MenuStart();

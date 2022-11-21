@@ -41,7 +41,7 @@ public class StartGame {
 		int maximJugadors = nJugadors-1;
 		int jugadorActual = 0;
 		
-		SetMonstreTokyo(jugadors.get(jugadorActual));
+		//SetMonstreTokyo(jugadors.get(jugadorActual));
 
 		while (!fiPartida) {
 
@@ -239,7 +239,7 @@ public class StartGame {
 			monstreDAO.Update(monstre);
 		}
 	}
-	//funcio per a sumar punts amb els valor de 1,2 y 3 enb els daus
+	//funcio per a sumar punts amb els valor de 1,2 y 3 en els daus
 	public void SumarPuntsMonstre(Jugador jug, int suma) {
 		MonstreDAO monstreDAO = new MonstreDAO();
 		List<Monstre> llistaMonstres = ListMonstresVius();
@@ -247,7 +247,8 @@ public class StartGame {
 			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				int var= monstre.getP_victoria() + suma;
 				monstre.setP_victoria(var);
-				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+suma+" punts, la seva puntuació actual es de "+monstre.getP_victoria()+" punts.");
+				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+suma+" punts, "
+						+ "la seva puntuació actual es de "+monstre.getP_victoria()+" punts.");
 				monstreDAO.Update(monstre);
 
 
@@ -263,7 +264,8 @@ public class StartGame {
 			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				int var= monstre.getEnergia() + suma;
 				monstre.setEnergia(var);
-				System.out.println("El Monstre "+monstre.getNom()+" suma un total de "+suma+" punts d'energia, té un total "+monstre.getEnergia()+" punts d'energia.");
+				System.out.println("El Monstre "+monstre.getNom()+" suma un total"
+						+ " de "+suma+" punts d'energia, té un total "+monstre.getEnergia()+" punts d'energia.");
 				monstreDAO.Update(monstre);
 			}
 		}

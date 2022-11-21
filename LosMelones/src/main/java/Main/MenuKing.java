@@ -46,14 +46,19 @@ public class MenuKing {
 				
 				numeroJugadors=sc.nextInt();
 				
-				System.out.println("Creant una partida per a " + numeroJugadors + " jugadors, esperi.");
-				
-				NovaPartida partida1 = new NovaPartida(numeroJugadors);
-				
-				sg = new StartGame(numeroJugadors);
-				
-				partida1.carregarDades();
-				
+				if(numeroJugadors < 2) {
+					System.out.println("Sisplau, mínim 2 jugadors!");
+				} else if(numeroJugadors > 4) {
+					System.out.println("Sisplau, máxim 4 jugadors!");
+				} else {
+					System.out.println("Creant una partida per a " + numeroJugadors + " jugadors, esperi.");
+					
+					NovaPartida partida1 = new NovaPartida(numeroJugadors);
+					
+					sg = new StartGame(numeroJugadors);
+					
+					partida1.carregarDades();
+				}
 				break;
 			case 2:
 				if (numeroJugadors == 0) {

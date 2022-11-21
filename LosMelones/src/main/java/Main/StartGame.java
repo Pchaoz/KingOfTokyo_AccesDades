@@ -24,7 +24,6 @@ public class StartGame {
 		this.monstreDAO = new MonstreDAO();
 		this.jugadorDAO = new JugadorDAO();
 		this.fiPartida = false;
-		Jugar();
 	}
 
 	public int getnJugadors() {
@@ -42,7 +41,7 @@ public class StartGame {
 		int maximJugadors = nJugadors-1;
 		int jugadorActual = 0;
 		
-		SetMonstreTokyo(jugadors.get(0));
+		SetMonstreTokyo(jugadors.get(jugadorActual));
 
 		while (!fiPartida) {
 
@@ -59,28 +58,6 @@ public class StartGame {
 				jugadorActual++;
 			}
 			
-			
-			//Monstre topMon = MonstreMaxPuntVictoria();
-
-			/*if (topMon.getP_victoria() >= 20) {
-				//S'ACABA LA PARTIDA AMB EL MONSTRE AMB 20 PUNTS COM A GUANYADOR
-				//DE MOMENT SOLS ACABA LA PARTIDA
-				fiPartida = true;
-			}else {
-				maximJugadors = ComprovarMonstres()-1;
-
-				if (maximJugadors < 2) {
-					jugadorActual++;
-
-					if (jugadorActual > maximJugadors) {
-						jugadorActual = 0;
-					}
-				}else {
-					//S'ACABA LA PARTIDA AMB EL MONSTRE QUE SEGEUIX VIU
-					//DE MOMENT SOLS ACABA LA PARTIDA
-					fiPartida = true;
-				}
-			}*/
 		}
 	}
 
@@ -430,6 +407,10 @@ public class StartGame {
 			if (monstre.getVides() <= 0) {
 				System.out.println("El monstre "+monstre.getNom()+" té una vida de "+monstre.getVides()+" está eliminat!");
 				monstre.setEleminat(true);
+				if(monstre.getMonstreCarta() != null) {
+					monstre.setMonstreCarta(null);
+					System.out.println("El monstre tenia una carta i ha tornat a estar disponible.");
+				}
 			}
 		}
 
@@ -483,17 +464,19 @@ public class StartGame {
 		List<Monstre> monstresLlista = ListMonstresVius();
 		Monstre mons = null;
 		for (Monstre monstre : monstresLlista) {
-			if(jug == monstre.getJugador()) {
+			if(monstre.getJugador().getJugID()==jug.getJugID()) {
 				mons = monstre;
 			}
 		}
-		int random = (int) Math.random();
-		if(mons.getMonstreCarta() != null) {
-			if(random == 1)
-			UtilitzaCartaPoder(mons);
-		} else {
-			if(random == 1)
-			ComprarCarta(mons);
+		if(mons != null) {
+			int random = (int) (Math.random() * 2);
+			if(mons.getMonstreCarta() != null) {
+				if(random == 1)
+				UtilitzaCartaPoder(mons);
+			} else {
+				if(random == 1)
+				ComprarCarta(mons);
+			}
 		}
 	}
 	
@@ -510,48 +493,53 @@ public class StartGame {
 			if(monstre.getNom().contains("Monstruo Escupidor"))
 				veneno = monstre;
 		}
+ 		System.out.println(monstresCarta.toString());
 		if(mons.getMonstreCarta() == null) {
 			if(mons.getEnergia() >= 8 && mimetismo != null) {
-				if(mimetismo.getMonstreCarta() == null) {
-					System.out.println("El monstre " + mons.getNom() + " compra la carta " + mimetismo.getNom() + " per 8 energia i es queda amb " + mons.getEnergia());
+				if(mimetismo.getMonstreCarta() == null) {			
 					mons.setEnergia(mons.getEnergia()-8);
 					mons.setMonstreCarta(mimetismo);
-					mimetismo.setMonstreCarta(mons);
+					System.out.println("ID Mimetismo: " + mimetismo.getId());
+					mimetismo.setMonstreCarta(mons);				
 					monstreDAO.Update(mimetismo);
 					monstreDAO.Update(mons);
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + mimetismo.getNom() + " per 8 energia i es queda amb " + mons.getEnergia());
 					return;
 				}
 			}
 			if (mons.getEnergia() >= 6 && rayo != null) {
-				if(rayo.getMonstreCarta() == null) {
-					System.out.println("El monstre " + mons.getNom() + " compra la carta " + rayo.getNom() + " per 6 energia i es queda amb " + mons.getEnergia());
+				if(rayo.getMonstreCarta() == null) {				
 					mons.setEnergia(mons.getEnergia()-6);
-					mons.setMonstreCarta(mimetismo);
+					mons.setMonstreCarta(rayo);
+					System.out.println("ID Rayo: " + rayo.getId());
 					rayo.setMonstreCarta(mons);
 					monstreDAO.Update(rayo);
 					monstreDAO.Update(mons);
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + rayo.getNom() + " per 6 energia i es queda amb " + mons.getEnergia());
 					return;
 				}
 			}
 			if (mons.getEnergia() >= 4 && veneno != null) {
-				if(veneno.getMonstreCarta() == null) {
-					System.out.println("El monstre " + mons.getNom() + " compra la carta " + veneno.getNom() + " per 4 energia i es queda amb " + mons.getEnergia());
+				if(veneno.getMonstreCarta() == null) {					
 					mons.setEnergia(mons.getEnergia()-4);
-					mons.setMonstreCarta(mimetismo);
-					veneno.setMonstreCarta(mons);
+					mons.setMonstreCarta(veneno);
+					System.out.println("ID Veneno: " + veneno.getId());
+					veneno.setMonstreCarta(mons);				
 					monstreDAO.Update(veneno);
 					monstreDAO.Update(mons);
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + veneno.getNom() + " per 4 energia i es queda amb " + mons.getEnergia());
 					return;
 				}
 			}
 			if (mons.getEnergia() >= 3 && aliento != null) {
-				if(aliento.getMonstreCarta() == null) {
-					System.out.println("El monstre " + mons.getNom() + " compra la carta " + aliento.getNom() + " per 3 energia i es queda amb " + mons.getEnergia());
+				if(aliento.getMonstreCarta() == null) {					
 					mons.setEnergia(mons.getEnergia()-3);
 					mons.setMonstreCarta(aliento);
-					rayo.setMonstreCarta(mons);
+					System.out.println("ID Aliento: " + aliento.getId());
+					aliento.setMonstreCarta(mons);					
 					monstreDAO.Update(aliento);
 					monstreDAO.Update(mons);
+					System.out.println("El monstre " + mons.getNom() + " compra la carta " + aliento.getNom() + " per 3 energia i es queda amb " + mons.getEnergia());
 					return;
 				}
 			}
@@ -663,6 +651,7 @@ public class StartGame {
 		if(llistaMonstres.size() == 1) {
 			Monstre mons = llistaMonstres.get(0);
 			System.out.println(mons.getNom() + " guanya per ser l' únic monstre viu!");
+			System.out.println("Felicitats al jugador " + mons.getJugador().getNom() + " " + mons.getJugador().getCognom() + " per la victoria!");
 			this.monstreGuanyador = mons;
 			this.fiPartida = true;
 			return;
@@ -670,6 +659,7 @@ public class StartGame {
 			for (Monstre monstre : llistaMonstres) {
 				if(monstre.getP_victoria() >= 20) {
 					System.out.println(monstre.getNom() + " guanya per haver obtingut 20 punts de victoria o més!");
+					System.out.println("Felicitats al jugador " + monstre.getJugador().getNom() + " " + monstre.getJugador().getCognom() + " per la victoria!");
 					this.monstreGuanyador = monstre;
 					this.fiPartida = true;
 					return;

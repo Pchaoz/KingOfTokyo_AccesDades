@@ -51,7 +51,7 @@ public class Monstre {
 	private boolean isCarta;
 
 	// NO POSAR CASCADETYPE EN EL CHILD JA QUE SI NO DONA ERROR DE PERSISTENCIA (detached entity passed to persist)
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_monstreCarta")
 	private Monstre monstreCarta;
 	

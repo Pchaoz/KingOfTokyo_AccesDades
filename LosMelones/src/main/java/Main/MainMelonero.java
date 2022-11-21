@@ -12,7 +12,7 @@ public class MainMelonero {
 	
 	public static void main(String[] args) {
 		
-MonstreDAO monstreDAO = new MonstreDAO();
+		MonstreDAO monstreDAO = new MonstreDAO();
 		
 		NovaPartida partida1 = new NovaPartida(4);
 		partida1.carregarDades();
@@ -27,7 +27,7 @@ MonstreDAO monstreDAO = new MonstreDAO();
 		monstre.setMonstreCarta(carta);
 		//carta.setMonstreCarta(monstre);
 		
-		//monstreDAO.Update(carta);
+		monstreDAO.Update(carta);
 		monstreDAO.Update(monstre);
 		
 		//MenuKing menu = new MenuKing();

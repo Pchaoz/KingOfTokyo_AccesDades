@@ -573,24 +573,32 @@ public class StartGame {
 				AlientoFlamigero(mons);
 				mons.setMonstreCarta(null);
 				monstrePoder.setMonstreCarta(null);
+				monstreDAO.Update(mons);
+				monstreDAO.Update(monstrePoder);
 			}
 			if(monstrePoder.getNom().contains("Mimetismo")) {
 				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				Mimetismo(mons);
 				mons.setMonstreCarta(null);
 				monstrePoder.setMonstreCarta(null);
+				monstreDAO.Update(mons);
+				monstreDAO.Update(monstrePoder);
 			}
 			if(monstrePoder.getNom().contains("Rayo Reductor")) {
 				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				RayoReductor(mons);
 				mons.setMonstreCarta(null);
 				monstrePoder.setMonstreCarta(null);
+				monstreDAO.Update(mons);
+				monstreDAO.Update(monstrePoder);
 			}
 			if(monstrePoder.getNom().contains("Monstruo Escupidor")) {
 				System.out.println("El monstre " + mons.getNom() + " utilitza la carta de poder " + monstrePoder.getNom());
 				MonstruoEscupidor(mons);
 				mons.setMonstreCarta(null);
 				monstrePoder.setMonstreCarta(null);
+				monstreDAO.Update(mons);
+				monstreDAO.Update(monstrePoder);
 			}
 		}
 	}

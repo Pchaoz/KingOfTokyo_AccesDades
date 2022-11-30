@@ -18,15 +18,15 @@ public class Monstre {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_monstre", nullable=false)
+	@Column(name="IdMonstre", nullable=false)
 	private int id_monstre;
 	
 	@ManyToOne
-	@JoinColumn(name="ID_Partida")
+	@JoinColumn(name="IdPartida")
 	private Partida partida;
 	
 	@ManyToOne
-	@JoinColumn(name="ID_Jugador")
+	@JoinColumn(name="IdJugador")
 	private Jugador jugador;
 	//Limitar 50 caracteres
 	@Column(name="nom", nullable = false)
@@ -35,8 +35,8 @@ public class Monstre {
 	@Column(name="vides", nullable=false)
 	private int vides;
 	
-	@Column(name="p_victoria", nullable=false)
-	private int p_victoria;
+	@Column(name="PuntsVictoria", nullable=false)
+	private int pvictoria;
 	
 	@Column(name="energia", nullable=false)
 	private int energia;
@@ -52,7 +52,7 @@ public class Monstre {
 
 	// NO POSAR CASCADETYPE EN EL CHILD JA QUE SI NO DONA ERROR DE PERSISTENCIA (detached entity passed to persist)
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_monstreCarta")
+	@JoinColumn(name="IdMonstreCarta")
 	private Monstre monstreCarta;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="monstreCarta")
@@ -67,7 +67,7 @@ public class Monstre {
 		this.partida = partida;
 		this.nom = nom;
 		this.vides = 10;
-		this.p_victoria = 0;
+		this.pvictoria = 0;
 		this.energia = 0;
 		this.eleminat = false;
 		this.toquio = false;
@@ -80,7 +80,7 @@ public class Monstre {
 		this.jugador = jugador;
 		this.nom = nom;
 		this.vides = vides;
-		this.p_victoria = p_victoria;
+		this.pvictoria = p_victoria;
 		this.energia = energia;
 		this.toquio = toquio;
 		this.eleminat = eleminat;
@@ -128,11 +128,11 @@ public class Monstre {
 	}
 
 	public int getP_victoria() {
-		return p_victoria;
+		return pvictoria;
 	}
 
-	public void setP_victoria(int p_victoria) {
-		this.p_victoria = p_victoria;
+	public void setP_victoria(int pvictoria) {
+		this.pvictoria = pvictoria;
 	}
 
 	public int getEnergia() {
@@ -186,7 +186,7 @@ public class Monstre {
 	@Override
 	public String toString() {
 		return "Monstre [id_Monstre=" + id_monstre + ", partida=" + partida + ", jugador=" + jugador + ", nom=" + nom + ", vides="
-				+ vides + ", p_victoria=" + p_victoria + ", energia=" + energia + ", toquio=" + toquio + ", eleminat="
+				+ vides + ", p_victoria=" + pvictoria + ", energia=" + energia + ", toquio=" + toquio + ", eleminat="
 				+ eleminat + ", monstreCarta=" + monstreCarta + "]";
 	}
 	
